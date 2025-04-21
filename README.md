@@ -77,7 +77,9 @@ In the BusyBox configuration interface, set the installation directory for BusyB
 ## NFS Boot Configuration
 to boot from NFS from the host machine.  
 `=> printenv bootargs`
+//
 `bootargs=console=ttyO0,115200n8 debuge earlyprintk root=/dev/nfs ip=192.168.0.100:::::eth0 nfsroot=192.168.0.101:/home/temp/fs,nfsvers=3,tcp rw`
+//
 `192.168.0.101` is the local IP address for the host, change it according to your setup.
 `/home/temp/fs` is the NFS export path for the host.
 
@@ -105,9 +107,10 @@ We've used I2C-2 to connect the tmp102 to BBB and we need to let the kernel know
 
     dtc -@ -O dtb -o BB-I2C2-TMP102.dtbo -b 0 BB-I2C2-TMP102.dts
 ### edit U-Boot environment variable bootargs 
-to Load kernel, DTB, and overlay from MMC, merges them, and boots.
+
+Load kernel, DTB, and overlay from MMC, merges them, and boots.
 `=>printenv bootcmd`
-`bootcmd=load mmc 0:1 ${loadaddr} zImage; load mmc 0:1 ${fdtaddr} am335x-boneblac                                                                                                             k.dtb; load mmc 0:1 ${overlayaddr} BB-I2C1-TMP102.dtbo; fdt addr ${fdtaddr}; fdt                                                                                                           resize 8192; fdt apply ${overlayaddr}; bootz ${loadaddr} - ${fdtaddr}`
+`bootcmd=load mmc 0:1 ${loadaddr} zImage; load mmc 0:1 ${fdtaddr} am335x-boneblack.dtb; load mmc 0:1 ${overlayaddr} BB-I2C1-TMP102.dtbo; fdt addr ${fdtaddr}; fdt resize 8192; fdt apply ${overlayaddr}; bootz ${loadaddr} - ${fdtaddr}`
 
 ## WebSocket Server Setup
 
